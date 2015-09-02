@@ -24,7 +24,10 @@ Route::get('logout', 'Auth\AuthController@getLogout');
 Route::get('register', 'Auth\AuthController@getRegister');
 Route::post('register', 'Auth\AuthController@postRegister');
 
-
 Route::controllers([
     'password' => 'Auth\PasswordController',
 ]);
+
+Route::get('admin', function () {
+    return view('layouts\admin_template');
+});

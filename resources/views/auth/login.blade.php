@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('header')
+    <link rel="stylesheet" href="/css/style.css">
+@stop
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -31,7 +35,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">
-                                                <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                                <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-register" value="Log In">
                                             </div>
                                         </div>
                                     </div>

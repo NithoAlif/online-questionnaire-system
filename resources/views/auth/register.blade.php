@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('header')
+    <link rel="stylesheet" href="/css/style.css">
+@stop
+
 @section('content')
     <div class="container">
         <div class="row">
