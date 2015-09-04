@@ -17,5 +17,7 @@ class QuestionnaireController extends Controller
     public function inputForm(Request $request)
     {
         print_r( $request->input('question.0'));
+
+        print_r( $request->input('question.1'));
     }
 }
