@@ -28,6 +28,15 @@ Route::controllers([
     'password' => 'Auth\PasswordController',
 ]);
 
-Route::get('admin', function () {
-    return view('layouts\admin_template');
+// Authenticated Users only!
+Route::group(['middleware' => 'auth'], function() {
+	Route::get('admin', function () {
+	    return view('layouts\admin_template');
+	});
 });
+
+// Test
+Route::get('builder', function() {
+	return view('builder');
+});
+Route::post('builder', 'QuestionnaireController@inputForm');
