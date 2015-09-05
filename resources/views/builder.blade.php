@@ -52,7 +52,9 @@
 
             $( "#form-content" )
             .append(           
-                "<div class='form-group'>" +
+                "<div class='well form-group'>" +
+                    "<a id='del-this' class='add_a btn btn-default' onclick='delQuestion(this)'>X</a>" +
+
                     "<label> Question </label>" +
                     "<input type='text' name='question[]' id='question' class='form-control'>" +
 
@@ -76,11 +78,21 @@
                         "</div>" +
                     "</span>" +
                     "<a id='add-p-" + id + "' class='add_a btn btn-default' onclick='addAnswer(" + id + ")' style='display: none'>Add Possible Answer</a>" +
-
                 "</div>"
             );
 
             $("#questions").val(id);
+
+        }
+
+        function delQuestion(thing) {
+
+            var total = parseInt($("#questions").val());
+
+            if ( ( total > 1 ) && ( total <= 55 ) ) {
+                console.log($($(thing).parent()).remove());
+                $("#questions").val(total - 1);
+            }
 
         }
 

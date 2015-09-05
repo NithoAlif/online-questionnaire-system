@@ -15,9 +15,10 @@ class QuestionnaireController extends Controller
      * @return a
      */
     public function inputForm(Request $request)
-    {
-        echo ( $request->input('questions') );
+    {        
         $total = $request->input('questions');
+        echo ($total);
+
         $possible_counter = 0;
         echo "<br><br>";
 
@@ -44,12 +45,6 @@ class QuestionnaireController extends Controller
 
             echo "<br><br>";
         }
-
-        //print_r( $request->input('question.0'));
-
-        //print_r( $request->input('question.1'));
-
-
 
     }
 }
