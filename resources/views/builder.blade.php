@@ -59,23 +59,22 @@
                     "<input type='text' name='sidenote[]' id='sidenote' class='form-control'>" +
 
                     "<label> Type </label>" +
-                    "<select class='form-control' name='type[]' id='type'>" +
-                        "<option>Short answer</option>" +
-                        "<option>Long answer</option>" +
-                        "<option>Checkbox</option>" +
-                        "<option>Multiple Choice</option>" +
-                        "<option>Dropdown</option>" +
+                    "<select class='type-selector form-control' name='type[]' id='type' onchange='changeType(this, " + id + ")'>" +
+                        "<option value='short'>Short answer</option>" +
+                        "<option value='long'>Long answer</option>" +
+                        "<option value='checkbox'>Checkbox</option>" +
+                        "<option value='multiple_choice'>Multiple Choice</option>" +
+                        "<option value='dropdown'>Dropdown</option>" +
                     "</select>" +
 
                     "<label> Possible Answer </label>" +
                     "<input type='hidden' id='total-possible-" + id + "' name='tpanswers[]' value='1'>" +
                     "<span id='possible-answer-" + id + "'>" +
                         "<div class='form-inline'>" +
-                            "<input type='text' name='panswers[]' id='sidenote' class='form-control'>" +
-                            "<a class='del_a btn btn-default' onclick='delAnswer(this, " + id + ")'>X</a>" +
+                            "<input type='text' name='panswers[]' id='panswer' class='form-control' value='user input' disabled>" +
                         "</div>" +
                     "</span>" +
-                    "<a class='add_a btn btn-default' onclick='addAnswer(" + id + ")'>Add Possible Answer</a>" +
+                    "<a id='add-p-" + id + "' class='add_a btn btn-default' onclick='addAnswer(" + id + ")' style='display: none'>Add Possible Answer</a>" +
 
                 "</div>"
             );
@@ -102,17 +101,44 @@
 
             var total = parseInt($("#total-possible-" + id).val());
 
-            if (total > 1) {
+            if ( ( total > 1 ) && ( total <= 35 ) ) {
                 console.log($($(thing).parent()).remove());
                 $("#total-possible-" + id).val(total - 1);
             }
 
         }
 
+        function delAllAnswer(id) {
+
+            $("#possible-answer-" + id + " > .form-inline:not(:first)").remove();
+
+        }
+
+        function changeType(thing, id) {
+            if ( ( $(thing).val() == "short" ) || ( $(thing).val() == "long" ) ) {
+                
+                delAllAnswer(id);
+                $("#add-p-" + id).hide();
+                $("#possible-answer-" + id + " > .form-inline:first > #panswer").val("user input");
+                $("#possible-answer-" + id + " > .form-inline:first > #panswer").prop('disabled', true);
+            
+            } else {
+
+                $("#possible-answer-" + id + " > .form-inline:first > #panswer").prop('disabled', false); 
+                $("#possible-answer-" + id + " > .form-inline:first > #panswer").val("");   
+                if ( !($("#add-p-" + id).is(":visible")) ) {
+                    delAllAnswer(id);
+                    $("#add-p-" + id).show();
+                }
+
+            }
+        }
+
         $('#add_q').on('click',function(){
             addQuestion();   
             console.log($(this));
         });
+
 
     </script>
 @endsection
