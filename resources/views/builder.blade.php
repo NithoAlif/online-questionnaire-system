@@ -44,6 +44,7 @@
 
 @section('jscript')
     <script>
+        $("#questions").val(0);        
         addQuestion();
 
         function addQuestion() {

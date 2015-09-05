@@ -16,8 +16,40 @@ class QuestionnaireController extends Controller
      */
     public function inputForm(Request $request)
     {
-        print_r( $request->input('question.0'));
+        echo ( $request->input('questions') );
+        $total = $request->input('questions');
+        $possible_counter = 0;
+        echo "<br><br>";
 
-        print_r( $request->input('question.1'));
+        for ($i = 0; $i < $total; $i++) {
+            echo ( $request->input('question.' . $i) );
+            echo "<br>";
+            echo ( $request->input('sidenote.' . $i) );
+            echo "<br>";
+            
+            $type = $request->input('type.' . $i);
+            echo ( $type );
+            echo "<br>";
+        
+            if ( ( $type != 'short' ) && ( $type != 'long' ) ) {
+                $tpanswer = $request->input('tpanswers.' . $i);
+                $possible_counter += $tpanswer;
+                echo ( $tpanswer );
+
+                for ($j = $possible_counter - $tpanswer; $j < $possible_counter; $j++) {
+                    echo "<br>";
+                    echo ( $request->input('panswers.' . $j));
+                }
+            }
+
+            echo "<br><br>";
+        }
+
+        //print_r( $request->input('question.0'));
+
+        //print_r( $request->input('question.1'));
+
+
+
     }
 }
