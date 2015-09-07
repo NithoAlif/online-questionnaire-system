@@ -41,8 +41,3 @@
         </div>
     </div>
 @stop
-
-
-@section('jscript')
-    <script src="/js/form-builder.js"></script>
-@endsection

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 
 class QuestionnaireController extends Controller
@@ -16,34 +16,38 @@ class QuestionnaireController extends Controller
      */
     public function inputForm(Request $request)
     {        
-        $total = $request->input('questions');
-        echo ($total);
+        // Assumption: Creating new form
+        $que_id = DB::table('questionnaire')->insertGetId(
+                ['title' => 'Test Q']
+            );
 
+        $total = $request->input('questions');
         $possible_counter = 0;
-        echo "<br><br>";
 
         for ($i = 0; $i < $total; $i++) {
-            echo ( $request->input('question.' . $i) );
-            echo "<br>";
-            echo ( $request->input('sidenote.' . $i) );
-            echo "<br>";
-            
+
+            $questions = $request->input('question.' . $i);
+            $sidenote = $request->input('sidenote.' . $i);
             $type = $request->input('type.' . $i);
-            echo ( $type );
-            echo "<br>";
-        
+            
+            $q_id = DB::table('questions')->insertGetId(
+                    ['questions' => $questions, 
+                     'sidenote' => $sidenote,
+                     'type' => $type,
+                     'que_id' => $que_id ]);
+
             if ( ( $type != 'short' ) && ( $type != 'long' ) ) {
                 $tpanswer = $request->input('tpanswers.' . $i);
                 $possible_counter += $tpanswer;
-                echo ( $tpanswer );
 
                 for ($j = $possible_counter - $tpanswer; $j < $possible_counter; $j++) {
-                    echo "<br>";
-                    echo ( $request->input('panswers.' . $j));
+                    DB::table('possible_answers')->insert(
+                        ['answer' => ( $request->input('panswers.' . $j)),
+                         'q_id' => $q_id]);
                 }
             }
 
-            echo "<br><br>";
+            echo "Success";
         }
 
     }

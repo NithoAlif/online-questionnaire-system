@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 
+    <link rel="stylesheet" href="/css/jquery-ui.min.css">
+
     @yield('header')
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -28,7 +30,9 @@
 
     <!-- REQUIRED JS SCRIPTS -->
     <!-- jQuery 2.1.4 -->
-    <script src="/js/jQuery-2.1.4.min.js"></script>
+    <script src="/js/jquery-2.1.4.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="/js/jquery-ui.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="/js/bootstrap.min.js"></script>
 
