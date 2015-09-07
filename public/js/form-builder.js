@@ -71,7 +71,7 @@ function delQuestion(thing) {
     var total = parseInt($("#questions").val());
 
     if ( ( total > 1 ) && ( total <= 55 ) ) {
-        console.log($($(thing).parent()).remove());
+        console.log($($($($(thing).parent()).parent()).parent()).remove());
         $("#questions").val(total - 1);
     }
 
