@@ -17,22 +17,56 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-12">
-                                @include('errors.error')
+                                    {{ $form->title }}
+                                <hr>
+                                    @foreach ( $questions as $question )
+                                        <?php $id = $question->q_id ?>
 
-                                <form id="builder-form" action="/builder" method="post" role="form" style="display: block;">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <input type="hidden" id="questions" name="questions" value="0">
+                                        {{ $question->questions }}
+                                        <br>
+                                        {{ $question->sidenote }}
+                                        <br>
+                                        
+                                        <?php $type = $question->type; ?>
 
-                                    <div id="form-content" class="builder">
-                                    </div>
+                                        @if ($type == 'dropdown')
+                                            <select name='a_<?php echo $id; ?>' class='form-control'>
+                                        @elseif ($type == 'short')
+                                            <input type='text' name='a_<?php echo $id; ?>'>
+                                        @elseif ($type == 'long')
+                                            <textarea rows='5' cols='50' name='a_<?php echo $id; ?>'></textarea>
+                                        @endif
 
-                                    <div class="form-group">
-                                        <a id="add_q" class="btn btn-default">Add Question</a>
-                                    </div>
+                                        @foreach ( $choices as $choice ) 
+                                            @if ( $choice->q_id == $id )
+                                                <?php $text = $choice->answer; ?>
 
-                                    <input type="submit" value="Submit" class="form-control btn btn-register">
+                                                @if ($type == 'checkbox')
+                                                    <div class='checkbox'>
+                                                        <label>
+                                                            <input type='checkbox' name='a_<?php echo $id; ?>' value='{{$text}}'>{{$text}}
+                                                        </label>
+                                                    </div>
+                                                @elseif ($type == 'multiple_choice')
+                                                    <div class='radio'>
+                                                        <label>
+                                                            <input type='radio' name='a_<?php echo $id; ?>' value='{{$text}}'>{{$text}}                                              
+                                                        </label>
+                                                    </div>
+                                                @elseif ($type == 'dropdown')
+                                                    <option value='{{$text}}'>{{$text}}</option>
+                                                @endif
+                                                
 
-                                </form>
+                                            @endif
+                                        @endforeach
+
+                                        @if ($type == 'dropdown')
+                                            </select>
+                                        @endif
+
+                                        <br>
+                                    @endforeach
                             </div>
                         </div>
                     </div>

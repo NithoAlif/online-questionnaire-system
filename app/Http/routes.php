@@ -40,3 +40,5 @@ Route::get('builder', function() {
 	return view('builder');
 });
 Route::post('builder', 'QuestionnaireController@inputForm');
+
+Route::get('viewer/{id}', 'QuestionnaireController@getForm');

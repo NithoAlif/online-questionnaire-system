@@ -14,8 +14,7 @@ class QuestionnaireController extends Controller
      * @param  a
      * @return a
      */
-    public function inputForm(Request $request)
-    {        
+    public function inputForm(Request $request) {        
         // Assumption: Creating new form
         $que_id = DB::table('questionnaire')->insertGetId(
                 ['title' => 'Test Q']
@@ -49,6 +48,28 @@ class QuestionnaireController extends Controller
 
             echo "Success";
         }
+
+    }
+
+    public function getForm($id) {
+
+        $form = DB::table('questionnaire')
+                ->select('title')
+                ->where('id', $id)
+                ->first();
+
+        $questions = DB::table('questions')
+                    ->select('id as q_id', 'questions', 'sidenote', 'type')
+                    ->where('que_id', $id)
+                    ->get();
+
+        $choices = DB::table('possible_answers')
+                    ->leftJoin('questions', 'questions.id', '=', 'q_id')
+                    ->select('q_id', 'answer')
+                    ->where('questions.que_id', $id)
+                    ->get();
+
+        return view('viewer', ['form' => $form, 'questions' => $questions, 'choices' => $choices]);
 
     }
 }
